@@ -34,12 +34,12 @@ def sigmay(temperature):
 
 def dv(temperature):
     return material.D0V * np.exp(
-        -material.QV / (constants.GASCONSTANT * temperature))
+        -material.QV / (constants.IDEALGASCONSTANT * temperature))
 
 
 def db(temperature):
     return material.DD0B * np.exp(
-        -material.QB / (constants.GASCONSTANT * temperature))
+        -material.QB / (constants.IDEALGASCONSTANT * temperature))
 
 
 def epssig(temperature):

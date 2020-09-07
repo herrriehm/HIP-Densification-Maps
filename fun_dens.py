@@ -23,22 +23,23 @@ import fun_aux
 import material
 
 
+def d_yield1(temperature, pressure):
+    return np.power(
+        (1 - constants.D0) * pressure / (1.3 * fun_aux.sigmay(temperature)) +
+        np.power(constants.D0, 3), 1 / 3)
+
+
+def d_yield2(temperature, pressure):
+    return 1 - np.exp(-3 / 2 * pressure / fun_aux.sigmay(temperature))
+
+
 # def d_yield1(temperature, pressure):
-#     return np.power((1 - constants.D0) * pressure / (1.3 * fun_aux.sigmay(temperature)) +
+#     return np.power((1 - constants.D0) * pressure / (1.3 * material.SIGMAY) +
 #                     np.power(constants.D0, 3), 1 / 3)
 #
 #
 # def d_yield2(temperature, pressure):
-#     return 1 - np.exp(-3 / 2 * pressure / fun_aux.sigmay(temperature))
-
-
-def d_yield1(temperature, pressure):
-    return np.power((1 - constants.D0) * pressure / (1.3 * material.SIGMAY) +
-                    np.power(constants.D0, 3), 1 / 3)
-
-
-def d_yield2(temperature, pressure):
-    return 1 - np.exp(-3 / 2 * pressure / material.SIGMAY)
+#     return 1 - np.exp(-3 / 2 * pressure / material.SIGMAY)
 
 
 def d_dot_plc1(d, temperature, pressure):
@@ -89,35 +90,31 @@ def d_dot_nhc2(d, temperature, pressure):
 def d_total_without_nhc1(d, temperature, pressure):
     if d > 1.0:
         d = 1.0
-    # print(f'1  D: {d}, T: {temperature}, P: {pressure}')
     return d_dot_plc1(d, temperature, pressure) + \
-        d_dot_ipb1(d, temperature, pressure)
+           d_dot_ipb1(d, temperature, pressure)
 
 
 def d_total_without_nhc2(d, temperature, pressure):
     if d > 1.0:
         d = 1.0
-    # print(f'2  D: {d}, T: {temperature}, P: {pressure}')
     return d_dot_plc2(d, temperature, pressure) + \
-        d_dot_ipb2(d, temperature, pressure)
+           d_dot_ipb2(d, temperature, pressure)
 
 
 def d_total_with_nhc1(d, temperature, pressure):
     if d > 1.0:
         d = 1.0
-    # print(f'3  D: {d}, T: {temperature}, P: {pressure}')
     return d_dot_plc1(d, temperature, pressure) + \
-        d_dot_ipb1(d, temperature, pressure) + \
-        d_dot_nhc1(d, temperature, pressure)
+           d_dot_ipb1(d, temperature, pressure) + \
+           d_dot_nhc1(d, temperature, pressure)
 
 
 def d_total_with_nhc2(d, temperature, pressure):
     if d > 1.0:
         d = 1.0
-    # print(f'4  D: {d}, T: {temperature}, P: {pressure}')
     return d_dot_plc2(d, temperature, pressure) + \
-        d_dot_ipb2(d, temperature, pressure) + \
-        d_dot_nhc2(d, temperature, pressure)
+           d_dot_ipb2(d, temperature, pressure) + \
+           d_dot_nhc2(d, temperature, pressure)
 
 
 def smoothing(d):
