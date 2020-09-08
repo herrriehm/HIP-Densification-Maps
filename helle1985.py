@@ -22,17 +22,33 @@ from scipy.integrate import solve_ivp
 from fun_aux import *
 from fun_dens import *
 
-STEPS = 40
-
 TMIN = 1673
-TMAX = 2273
+TMAX = 1723
 
 Pmax = 100.0E6  # Pa
 
-TIMES = np.array([15, 30, 60, 120, 240])  # min
+# times for contour lines
+TIMES = np.array([15, 30, 60, 120, 300])  # min
+
+# total time of HIP cycle to be simulated
 TIME = np.max(TIMES)
 
+# times at which to store the computed solution of rate equations
+# every minute seems to be okay
+t_eval = np.arange(0, TIME * 60 + 1, 60)
+
+# number of steps 'on the x axis' to calculate the densification
+STEPS = np.size(t_eval)
+
 TArray = np.linspace(TMIN, TMAX, num=STEPS)
+
+def TArrayRedouani2019():
+    if t<60:
+        pass
+    else:
+        pass
+    return
+
 
 # Data from Arzt 1983 Figure 3
 # TArray = np.array(
@@ -67,9 +83,10 @@ for i in np.arange(STEPS):
     if DYield[i] >= constants.DBREAK:
         DYield[i] = d_yield2(TArray[i], PArray[i])
 
-t_eval = np.arange(0, TIME * 60 + 1, 300)
+t_eval = np.arange(0, TIME * 60 + 1, 60)
 
 DTotal = np.zeros([STEPS, 5])
+DTime = np.zeros([STEPS])
 
 for i in np.arange(STEPS):
     DStart = DYield[i]
@@ -78,13 +95,13 @@ for i in np.arange(STEPS):
     if material.G < 2 * x(DStart):
         sol = solve_ivp(d_total_with_nhc, [0, TIME * 60], [DStart],
                         args=[T, P], t_eval=t_eval)
-        DStep = sol.y[0][[3, 6, 12, 24, 48]]
     else:
         sol = solve_ivp(d_total_without_nhc, [0, TIME * 60], [DStart],
                         args=[T, P], t_eval=t_eval)
-        DStep = sol.y[0][[3, 6, 12, 24, 48]]
 
+    DStep = sol.y[0][[15, 30, 60, 120, 240]]
     DTotal[i] = DStep
+    DTime[i] = sol.y[0][i]
 
 
 # fig, ax = plt.subplots()
@@ -115,7 +132,7 @@ plt.show()
 csvArray = np.concatenate(
     (np.transpose([TArray]), np.transpose([DYield]), DTotal), axis=1)
 
-exportfilename = 'Redouani2019Fig5.csv'
+exportfilename = 'intermediateForDoverT.csv'
 
 np.savetxt(exportfilename, csvArray,
            header='T, Yield, 15 min, 30 min, 60 min, 120 min, 240 min',
