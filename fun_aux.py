@@ -70,3 +70,7 @@ def r(d):
     if d > 1:
         d = 1
     return material.R * np.power((1 - d) / 6, 1 / 3)
+
+
+def ramps():
+    T = np.array([6, 2])

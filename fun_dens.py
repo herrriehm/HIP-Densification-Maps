@@ -32,14 +32,25 @@ def d_yield1(temperature, pressure):
 def d_yield2(temperature, pressure):
     return 1 - np.exp(-3 / 2 * pressure / fun_aux.sigmay(temperature))
 
+# def d_yield1(temperature, pressure):
+#     """Dyield1 from Redouani 2019, eq. 8"""
+#     return constants.D0 / 2 * (1 + np.power(
+#         1 + 2 / (3 * constants.D0) * pressure / fun_aux.sigmay(temperature),
+#         1 / 2))
+#
+#
+# def d_yield2(temperature, pressure):
+#     """Dyield2 from Redouani 2019, eq. 10"""
+#     return 1 - np.exp(-3 / 2 * pressure / fun_aux.sigmay(temperature))
+
 
 # def d_yield1(temperature, pressure):
-#     return np.power((1 - constants.D0) * pressure / (1.3 * material.SIGMAY) +
+#     return np.power((1 - constants.D0) * pressure / (1.3 * material.SIGMAY0) +
 #                     np.power(constants.D0, 3), 1 / 3)
 #
 #
 # def d_yield2(temperature, pressure):
-#     return 1 - np.exp(-3 / 2 * pressure / material.SIGMAY)
+#     return 1 - np.exp(-3 / 2 * pressure / material.SIGMAY0)
 
 
 def d_dot_plc1(d, temperature, pressure):
@@ -90,6 +101,8 @@ def d_dot_nhc2(d, temperature, pressure):
 def d_total_without_nhc1(d, temperature, pressure):
     if d > 1.0:
         d = 1.0
+    # if d < constants.D0:
+    #     d = constants.D0+1.0E-6
     return d_dot_plc1(d, temperature, pressure) + \
            d_dot_ipb1(d, temperature, pressure)
 
@@ -97,6 +110,8 @@ def d_total_without_nhc1(d, temperature, pressure):
 def d_total_without_nhc2(d, temperature, pressure):
     if d > 1.0:
         d = 1.0
+    # if d < constants.D0:
+    #     d = constants.D0+1.0E-6
     return d_dot_plc2(d, temperature, pressure) + \
            d_dot_ipb2(d, temperature, pressure)
 
@@ -104,6 +119,8 @@ def d_total_without_nhc2(d, temperature, pressure):
 def d_total_with_nhc1(d, temperature, pressure):
     if d > 1.0:
         d = 1.0
+    # if d < constants.D0:
+    #     d = constants.D0+1.0E-6
     return d_dot_plc1(d, temperature, pressure) + \
            d_dot_ipb1(d, temperature, pressure) + \
            d_dot_nhc1(d, temperature, pressure)
@@ -112,6 +129,8 @@ def d_total_with_nhc1(d, temperature, pressure):
 def d_total_with_nhc2(d, temperature, pressure):
     if d > 1.0:
         d = 1.0
+    # if d < constants.D0:
+    #     d = constants.D0+1.0E-6
     return d_dot_plc2(d, temperature, pressure) + \
            d_dot_ipb2(d, temperature, pressure) + \
            d_dot_nhc2(d, temperature, pressure)
@@ -124,9 +143,14 @@ def smoothing(d):
     Hochtemperaturwerkstoffe beim heißisostatischen Pressen by Martin
     Dietze (1991)
     """
+    if d > 1.0:
+        d = 1.0
 
-    return 0.5 * (1 + (np.exp(75 * (d - 0.9)) - 1) / (
-            np.exp(75 * (d - 0.9)) + 1))
+    # if d == 0.9:
+    #     d = 0.9+1.0E-3
+
+    return 0.5 * (1 + (np.exp(75 * (d - constants.DBREAK)) - 1) / (
+            np.exp(75 * (d - constants.DBREAK)) + 1))
 
 
 def d_total_without_nhc(t, d, temperature, pressure):
