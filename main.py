@@ -20,24 +20,27 @@ import matplotlib.pyplot as plt
 from scipy.integrate import solve_ivp
 
 from fun_aux import *
-from fun_dens import *
+# from fun_dens import *
+import material
 
-import cvntable58
+from ashby1987 import *
+
+# import cvntable58
 
 # import reardon1998
 
 
-TMIN = 1200+273
-TMAX = 1200+273
-Pmax = 150E6
+TMIN = 0.6*material.TM
+TMAX = 0.9*material.TM
+Pmax = 100E6
 
 # Pmax = 30.0E6  # Pa
 
 # times for contour lines
-TIMES = np.array([15, 30, 60])  # min
+TIMES = np.array([15, 30, 60, 120, 240])  # min
 
 # total time of HIP cycle to be simulated
-TIME = np.max(84)
+TIME = np.max(TIMES)
 
 # times at which to store the computed solution of rate equations
 # every minute seems to be okay
@@ -46,13 +49,13 @@ t_eval = np.arange(0, TIME * 60 + 1, 60)
 # number of steps 'on the x axis' to calculate the densification
 STEPS = np.size(t_eval)
 
-# TArray = np.linspace(TMIN, TMAX, num=STEPS)
+TArray = np.linspace(TMIN, TMAX, num=STEPS)
 #
 # PArray = np.logspace(-2, 1, num=STEPS) * material.SIGMAY #fun_aux.sigmay(TMAX)
-# PArray = np.linspace(Pmax, Pmax, num=STEPS)
+PArray = np.linspace(Pmax, Pmax, num=STEPS)
 #
-TArray = cvntable58.TArray
-PArray = cvntable58.PArray
+# TArray = cvntable58.TArray
+# PArray = cvntable58.PArray
 
 # calculate initial density Dy from instant yielding
 DYield = np.zeros(STEPS)
@@ -100,19 +103,19 @@ for i in np.arange(STEPS):
 #
 # DJasper = fitjasper(TArray)
 
-print(DTime[-1])
+# print(DTime[-1])
 
-# plt.plot(TArray, DYield)
-# plt.plot(TArray, DTotal)
-# plt.xlim(TMIN, TMAX)
-fig, ax = plt.subplots()
-ax.plot(np.arange(STEPS), DTime*1000, label='D')
-ax.plot(np.arange(STEPS), TArray, label='T')
-ax.plot(np.arange(STEPS), PArray/30000, label='P')
-#
-legend = ax.legend(loc='upper center', fontsize='x-large')
+plt.plot(TArray, DYield)
+plt.plot(TArray, DTotal)
+plt.xlim(TMIN, TMAX)
+# fig, ax = plt.subplots()
+# ax.plot(np.arange(STEPS), DTime*1000, label='D')
+# ax.plot(np.arange(STEPS), TArray, label='T')
+# ax.plot(np.arange(STEPS), PArray/30000, label='P')
+# #
+# legend = ax.legend(loc='upper center', fontsize='x-large')
 
-# plt.ylim(constants.D0, 1)
+plt.ylim(0.8, 1)
 # plt.xlabel('Temperatur / K')
 # plt.ylabel('relative Dichte / –')
 plt.show()
