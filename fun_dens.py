@@ -23,14 +23,14 @@ import fun_aux
 import material
 
 
-def d_yield1(temperature, pressure):
-    return np.power(
-        (1 - constants.D0) * pressure / (1.3 * fun_aux.sigmay(temperature)) +
-        np.power(constants.D0, 3), 1 / 3)
-
-
-def d_yield2(temperature, pressure):
-    return 1 - np.exp(-3 / 2 * pressure / fun_aux.sigmay(temperature))
+# def d_yield1(temperature, pressure):
+#     return np.power(
+#         (1 - constants.D0) * pressure / (1.3 * fun_aux.sigmay(temperature)) +
+#         np.power(constants.D0, 3), 1 / 3)
+#
+#
+# def d_yield2(temperature, pressure):
+#     return 1 - np.exp(-3 / 2 * pressure / fun_aux.sigmay(temperature))
 
 # def d_yield1(temperature, pressure):
 #     """Dyield1 from Redouani 2019, eq. 8"""
@@ -44,13 +44,13 @@ def d_yield2(temperature, pressure):
 #     return 1 - np.exp(-3 / 2 * pressure / fun_aux.sigmay(temperature))
 
 
-# def d_yield1(temperature, pressure):
-#     return np.power((1 - constants.D0) * pressure / (1.3 * material.SIGMAY0) +
-#                     np.power(constants.D0, 3), 1 / 3)
-#
-#
-# def d_yield2(temperature, pressure):
-#     return 1 - np.exp(-3 / 2 * pressure / material.SIGMAY0)
+def d_yield1(temperature, pressure):
+    return np.power((1 - constants.D0) * pressure / (1.3 * material.SIGMAY0) +
+                    np.power(constants.D0, 3), 1 / 3)
+
+
+def d_yield2(temperature, pressure):
+    return 1 - np.exp(-3 / 2 * pressure / material.SIGMAY0)
 
 
 def d_dot_plc1(d, temperature, pressure):

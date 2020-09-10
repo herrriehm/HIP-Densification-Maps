@@ -21,8 +21,11 @@ import scipy.constants
 Z0 = 7.3
 C = 15.5
 
-D0 = 0.655
-DBREAK = 0.9
+D0 = 0.64
+DC = 0.95
+DBREAK = 0.91
+P0 = 2.0E-2 # Pa = 2E-3 mbar
+
 
 IDEALGASCONSTANT = scipy.constants.R  # J/mol/K
 BOLTZMANN = scipy.constants.k  # J/K

@@ -16,26 +16,27 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-# # Tool steel
-# OMEGA = 1.21E-29  # m^3
-# B = 2.58E-10  # m
-# TM = 1680  # K
-# SIGMAY = 200.0E6  # Pa; from Helle 1985
-# SIGMAY0 = 200.0E6  # Pa; from Redouani 2015
-# ALPHA = -0.85  # from Redouani 2015
-# # SIGMAY0 = 9.1E8  # Pa; from Arzt 1983
-# # ALPHA = -4.5  # from Arzt 1983
-# MU0 = 8.1E10  # Pa
-# BETA = -0.85
-# D0V = 3.7E-5  # m^2 s^-1
-# QV = 280.0E3  # J mol^-1
-# DD0B = 2.0E-13  # m^3 s^-1
-# QB = 167.0E3  # J mol^-1
-# n = 7.5
-# A = 1.5E12
-#
-# R = 50.0E-6  # m
-# G = 10.0E-6  # m
+# Tool steel
+OMEGA = 1.21E-29  # m^3
+B = 2.58E-10  # m
+TM = 1680  # K
+SIGMAY = 200.0E6  # Pa; from Helle 1985
+SIGMAY0 = 200.0E6  # Pa; from Redouani 2015
+ALPHA = -0.85  # from Redouani 2015
+# SIGMAY0 = 9.1E8  # Pa; from Arzt 1983
+# ALPHA = -4.5  # from Arzt 1983
+MU0 = 8.1E10  # Pa
+BETA = -0.85
+D0V = 3.7E-5  # m^2 s^-1
+QV = 280.0E3  # J mol^-1
+QCRP = 280.0E3  # J mol^-1
+DD0B = 2.0E-13  # m^3 s^-1
+QB = 167.0E3  # J mol^-1
+n = 7.5
+A = 1.5E12
+
+R = 25.0E-6  # m
+G = 50.0E-6  # m
 
 
 # # Copper
@@ -94,20 +95,21 @@
 # R = 5.242E-6
 # G = 1.0484E-05
 
-# 316L
-OMEGA = 1.21E-29
-B = 2.58E-10
-TM = 1680
-SIGMAY0 = 550.0E6  # 363.6E6  # fitted with Matlab for CvN Figure 5-5
-ALPHA = -0.85  # taken from Tool Steel data
-MU0 = 8.1E10
-BETA = -0.85
-D0V = 3.7E-5
-QV = 280.0E3
-DD0B = 2.0E-13
-QB = 167.0E3
-n = 7.9
-A = 1.0E10
-
-R = 1.0E3 # 143.0E6  # m # taken with WPD from CvN Figure 6-1
-G = 10.0E-6  # m
+# # 316L
+# OMEGA = 1.21E-29
+# B = 2.58E-10
+# TM = 1680
+# SIGMAY0 = 550.0E6  # 363.6E6  # fitted with Matlab for CvN Figure 5-5
+# ALPHA = -0.85  # taken from Tool Steel data
+# MU0 = 8.1E10
+# BETA = -0.85
+# D0V = 3.7E-5
+# QV = 280.0E3
+# QCRP = 280.0E3
+# DD0B = 2.0E-13
+# QB = 167.0E3
+# n = 7.9
+# A = 1.0E10
+#
+# R = 1.0E3 # 143.0E6  # m # taken with WPD from CvN Figure 6-1
+# G = 10.0E-6  # m
