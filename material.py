@@ -35,8 +35,8 @@ QB = 167.0E3  # J mol^-1
 n = 7.5
 A = 1.5E12
 
-R = 25.0E-6  # m
-G = 50.0E-6  # m
+R = 50.0E-6  # m
+G = 100.0E-6  # m
 
 
 # # Copper
@@ -111,5 +111,5 @@ G = 50.0E-6  # m
 # n = 7.9
 # A = 1.0E10
 #
-# R = 1.0E3 # 143.0E6  # m # taken with WPD from CvN Figure 6-1
+# R = 143.0E6  # m # taken with WPD from CvN Figure 6-1
 # G = 10.0E-6  # m

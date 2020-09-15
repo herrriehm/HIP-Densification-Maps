@@ -30,7 +30,11 @@ import material
 #
 #
 # def d_yield2(temperature, pressure):
-#     return 1 - np.exp(-3 / 2 * pressure / fun_aux.sigmay(temperature))
+#     result = 1 - np.exp(-3 / 2 * pressure / fun_aux.sigmay(temperature))
+#     if result < constants.D0:
+#         return constants.D0
+#     else:
+#         return result
 
 # def d_yield1(temperature, pressure):
 #     """Dyield1 from Redouani 2019, eq. 8"""
@@ -50,7 +54,11 @@ def d_yield1(temperature, pressure):
 
 
 def d_yield2(temperature, pressure):
-    return 1 - np.exp(-3 / 2 * pressure / material.SIGMAY0)
+    result = 1 - np.exp(-3 / 2 * pressure / material.SIGMAY0)
+    if result < constants.D0:
+        return constants.D0
+    else:
+        return result
 
 
 def d_dot_plc1(d, temperature, pressure):
@@ -145,9 +153,6 @@ def smoothing(d):
     """
     if d > 1.0:
         d = 1.0
-
-    # if d == 0.9:
-    #     d = 0.9+1.0E-3
 
     return 0.5 * (1 + (np.exp(75 * (d - constants.DBREAK)) - 1) / (
             np.exp(75 * (d - constants.DBREAK)) + 1))
