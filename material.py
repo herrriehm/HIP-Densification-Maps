@@ -38,6 +38,7 @@ A = 1.5E12
 R = 50.0E-6  # m
 G = 100.0E-6  # m
 
+exportfilename = 'diss_Helle1985Fig10.csv'
 
 # # Copper
 # OMEGA = 1.18E-29
@@ -100,6 +101,7 @@ G = 100.0E-6  # m
 # B = 2.58E-10
 # TM = 1680
 # SIGMAY0 = 550.0E6  # 363.6E6  # fitted with Matlab for CvN Figure 5-5
+# SIGMAY = 550.0E6  # 363.6E6  # fitted with Matlab for CvN Figure 5-5
 # ALPHA = -0.85  # taken from Tool Steel data
 # MU0 = 8.1E10
 # BETA = -0.85
@@ -113,3 +115,26 @@ G = 100.0E-6  # m
 #
 # R = 143.0E6  # m # taken with WPD from CvN Figure 6-1
 # G = 10.0E-6  # m
+
+
+# # Lead
+# OMEGA = 3.03E-29  # m^3
+# B = 3.49E-10  # m
+# TM = 601  # K
+# SIGMAY0 = 5.8E6  # Pa; from Ashby 1987
+# # SIGMAY0 = 200.0E6  # Pa; from Redouani 2015
+# # ALPHA = -0.85  # from Redouani 2015
+# # SIGMAY0 = 9.1E8  # Pa; from Arzt 1983
+# # ALPHA = -4.5  # from Arzt 1983
+# MU0 = 7.3E9  # Pa
+# BETA = -0.76
+# D0V = 1.4E-4  # m^2 s^-1
+# QV = 109.0E3  # J mol^-1
+# QCRP = QV  # J mol^-1
+# DD0B = 8.0E-14  # m^3 s^-1
+# QB = 66.0E3  # J mol^-1
+# n = 5.0
+# A = 2.5E8
+#
+# R = 75.0E-6  # m
+# # G = 100.0E-6  # m

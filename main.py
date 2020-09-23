@@ -25,19 +25,23 @@ from fun_dens import *
 # from ashby1987 import *
 
 # import reardon1998
+# import svoboda1996
+# import schnecke
 
 
 TMIN = 1200 + 273
 TMAX = 1200 + 273
-Pmax = 110E6
-
-# Pmax = 30.0E6  # Pa
+Pmin = 50E6
+Pmax = 150E6
 
 # times for contour lines
 TIMES = np.array([15, 30, 60, 120, 240])  # min
 
+# TArray = schnecke.TArray
+# PArray = schnecke.PArray
+
 # total minutes of HIP cycle to be simulated
-TIME = 4 * 60
+TIME = np.max(TIMES)
 
 # times at which to store the computed solution of rate equations
 # every minute seems to be okay
@@ -47,13 +51,9 @@ t_eval = np.arange(0, TIME * 60 + 1, 60)
 STEPS = np.size(t_eval)
 
 TArray = np.linspace(TMIN, TMAX, num=STEPS)
-#
 PArray = np.logspace(-2, 1,
-                     num=STEPS) * material.SIGMAY  # fun_aux.sigmay(TMAX)
-# PArray = np.linspace(Pmax, Pmax, num=STEPS)
-#
-# TArray = cvntable58.TArray
-# PArray = cvntable58.PArray
+                     num=STEPS) * material.SIGMAY0  # fun_aux.sigmay(TMAX)
+# PArray = np.linspace(Pmin, Pmax, num=STEPS)
 
 # calculate initial density Dy from instant yielding
 DYield = np.zeros(STEPS)
@@ -68,6 +68,7 @@ DTime = np.zeros([STEPS])
 
 
 def fulldense(t, y, temperature, pressure):
+    """event function for solve_ivp to check if D is already 1"""
     return y[0] - 1
 
 
@@ -77,28 +78,27 @@ for i in np.arange(STEPS):
     DStart = DYield[i]
     P = PArray[i]
     T = TArray[i]
-    # print(f'{i} {P}, {T}')
-    if material.G < 2 * x(DStart):
-        sol = solve_ivp(d_total_with_nhc, [0, TIME * 60], [DStart],
-                        args=[T, P], t_eval=t_eval,)
-    else:
-        sol = solve_ivp(d_total_without_nhc, [0, TIME * 60], [DStart],
-                        args=[T, P], t_eval=t_eval,)
+    # if material.G < 2 * x(DStart):
+    sol = solve_ivp(d_total, [0, TIME * 60], [DStart],
+                    args=[T, P], t_eval=t_eval, rtol=1e-6, atol=1e-6)
+    # else:
+    #     sol = solve_ivp(d_total_without_nhc, [0, TIME * 60], [DStart],
+    #                     args=[T, P], t_eval=t_eval, rtol=1e-6, atol=1e-6)
 
-    # DStep = sol.y[0][TIMES]
-    # DTotal[i] = DStep
-    # DTime[i] = sol.y[0][i]
+    DStep = sol.y[0][TIMES]
+    DTotal[i] = DStep
+    DTime[i] = sol.y[0][i]
     # print(DTime[i])
 
-fig, ax = plt.subplots()
+fig, ax = plt.subplots(figsize=(8, 8))
 ax.semilogx(PArray, DYield)
+# plt.plot(PArray, DYield)
 plt.plot(PArray, DTotal)
-# # ax.semilogx([np.amin(PArray), np.amax(PArray)], [constants.D0, constants.D0])
-# plt.xlim(np.amin(PArray), np.amax(PArray))
-# # # plt.xlim(8E5, 2E9)
+# # # ax.semilogx([np.amin(PArray), np.amax(PArray)], [constants.D0, constants.D0])
+plt.xlim(np.amin(PArray), np.amax(PArray))
 plt.ylim(0.6, 1)
-plt.xlabel('Druck / Pa')
-plt.ylabel('relative Dichte / –')
+plt.xlabel('Pressure / Pa')
+plt.ylabel('Relative Density / –')
 plt.show()
 
 # def fitjasper(temperature):
@@ -112,24 +112,23 @@ plt.show()
 
 # plt.plot(TArray, DYield)
 # plt.plot(TArray, DTotal)
-# plt.xlim(TMIN, TMAX)
 # fig, ax = plt.subplots()
-# ax.plot(np.arange(STEPS), DTime, label='D')
-# ax.plot(np.arange(STEPS), TArray, label='T')
-# ax.plot(np.arange(STEPS), PArray/30000, label='P')
+# ax.plot(DTime, label='D')
+# ax.plot(TArray/1000, label='T')
+# ax.plot(PArray/100000000, label='P')
 #
 # legend = ax.legend(loc='upper center', fontsize='x-large')
 
+# plt.xlim(0, 268)
 # plt.ylim(constants.D0, 1)
-# plt.xlabel('Temperatur / K')
+# plt.xlabel('Zeit / min')
 # plt.ylabel('relative Dichte / –')
 # plt.show()
 # print(f'T: {TArray[-1]-273}, P: {PArray[-1]/1000000}, D: {DTime[-1]}')
+
 # csvArray = np.concatenate(
-#     (np.transpose([TArray]), np.transpose([DYield]), DTotal), axis=1)
+#     (np.transpose([PArray]), np.transpose([DYield]), DTotal), axis=1)
 #
-# exportfilename = 'intermediateForDoverT.csv'
-#
-# np.savetxt(exportfilename, csvArray,
-#            header='T, Yield, 15 min, 30 min, 60 min, 120 min, 240 min',
+# np.savetxt(material.exportfilename, csvArray,
+#            # header='T, Yield, 15 min, 30 min, 60 min, 120 min, 240 min',
 #            delimiter=',')

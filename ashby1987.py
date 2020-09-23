@@ -47,7 +47,11 @@ def d_yield1(temperature, pressure):
 
 
 def d_yield2(temperature, pressure):
-    return 1 - np.exp(-3 / 2 * pressure / material.SIGMAY0)
+    result = 1 - np.exp(-3 / 2 * pressure / material.SIGMAY0)
+    if result < constants.D0:
+        return constants.D0
+    else:
+        return result
 
 
 def d_dot_plc1(d, temperature, pressure):
@@ -76,7 +80,7 @@ def d_dot_bd2(d, temperature, pressure):
 
 def d_dot_vd1(d, temperature, pressure):
     return 43 * c(d) * (1 - constants.D0) * fun_aux.dv(temperature) / np.power(
-        material.R, 2) * (pressure - pressure_i(d)) * material.OMEGA / (
+        material.R, 2) * (pressure - constants.P0) * material.OMEGA / (
                    constants.BOLTZMANN * temperature)
 
 
