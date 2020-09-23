@@ -92,7 +92,7 @@ def d_dot_vd2(d, temperature, pressure):
                    constants.BOLTZMANN * temperature)
 
 
-def d_total_without_nhc1(d, temperature, pressure):
+def d_total_1(d, temperature, pressure):
     if d > 1.0:
         d = 1.0
     # if d < constants.D0:
@@ -102,7 +102,7 @@ def d_total_without_nhc1(d, temperature, pressure):
            d_dot_vd1(d, temperature, pressure)
 
 
-def d_total_without_nhc2(d, temperature, pressure):
+def d_total_2(d, temperature, pressure):
     if d > 1.0:
         d = 1.0
     # if d < constants.D0:
@@ -110,27 +110,6 @@ def d_total_without_nhc2(d, temperature, pressure):
     return d_dot_plc2(d, temperature, pressure) + \
            d_dot_bd2(d, temperature, pressure) + \
            d_dot_vd2(d, temperature, pressure)
-
-
-def d_total_with_nhc1(d, temperature, pressure):
-    if d > 1.0:
-        d = 1.0
-    # if d < constants.D0:
-    #     d = constants.D0+1.0E-6
-    return d_dot_plc1(d, temperature, pressure) + \
-           d_dot_bd1(d, temperature, pressure) + \
-           d_dot_vd1(d, temperature, pressure)
-
-
-def d_total_with_nhc2(d, temperature, pressure):
-    if d > 1.0:
-        d = 1.0
-    # if d < constants.D0:
-    #     d = constants.D0+1.0E-6
-    return d_dot_plc2(d, temperature, pressure) + \
-           d_dot_bd2(d, temperature, pressure) + \
-           d_dot_vd2(d, temperature, pressure)
-
 
 def smoothing(d):
     """
@@ -149,12 +128,7 @@ def smoothing(d):
             np.exp(75 * (d - constants.DBREAK)) + 1))
 
 
-def d_total_without_nhc(t, d, temperature, pressure):
-    return (1 - smoothing(d)) * d_total_without_nhc1(d, temperature,
+def d_total(t, d, temperature, pressure):
+    return (1 - smoothing(d)) * d_total_1(d, temperature,
                                                      pressure) + \
-           smoothing(d) * d_total_without_nhc2(d, temperature, pressure)
-
-
-def d_total_with_nhc(t, d, temperature, pressure):
-    return (1 - smoothing(d)) * d_total_with_nhc1(d, temperature, pressure) + \
-           smoothing(d) * d_total_with_nhc2(d, temperature, pressure)
+           smoothing(d) * d_total_2(d, temperature, pressure)
