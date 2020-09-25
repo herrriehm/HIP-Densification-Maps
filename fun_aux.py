@@ -58,8 +58,9 @@ def x(d):
 
 
 def p_eff(d, pressure):
-    return pressure * (1 - constants.D0) / (
+    result = pressure * (1 - constants.D0) / (
                 np.power(d, 2) * (d - constants.D0))
+    return result
 
 
 def rho(d):

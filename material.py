@@ -21,8 +21,10 @@ OMEGA = 1.21E-29  # m^3
 B = 2.58E-10  # m
 TM = 1680  # K
 SIGMAY = 200.0E6  # Pa; from Helle 1985
-SIGMAY0 = 200.0E6  # Pa; from Redouani 2015
-ALPHA = -0.85  # from Redouani 2015
+SIGMAY0 = 791.375E6  # Pa; from Arzt 1983 with WPD
+# SIGMAY0 = 200.0E6  # Pa; from Redouani 2015
+ALPHA = -0.73  # from Arzt 1983 with WPD
+# ALPHA = -0.85  # from Redouani 2015
 # SIGMAY0 = 9.1E8  # Pa; from Arzt 1983
 # ALPHA = -4.5  # from Arzt 1983
 MU0 = 8.1E10  # Pa
@@ -36,7 +38,7 @@ n = 7.5
 A = 1.5E12
 
 R = 50.0E-6  # m
-G = 100.0E-6  # m
+G = 10.0E-6  # m
 
 exportfilename = 'diss_Helle1985Fig10.csv'
 

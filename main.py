@@ -31,8 +31,8 @@ from fun_dens import *
 
 TMIN = 1200 + 273
 TMAX = 1200 + 273
-Pmin = 50E6
-Pmax = 150E6
+Pmin = 100E6
+Pmax = 100E6
 
 # times for contour lines
 TIMES = np.array([15, 30, 60, 120, 240])  # min
@@ -52,7 +52,7 @@ STEPS = np.size(t_eval)
 
 TArray = np.linspace(TMIN, TMAX, num=STEPS)
 PArray = np.logspace(-2, 1,
-                     num=STEPS) * material.SIGMAY0  # fun_aux.sigmay(TMAX)
+                     num=STEPS) * fun_aux.sigmay(TMAX)
 # PArray = np.linspace(Pmin, Pmax, num=STEPS)
 
 # calculate initial density Dy from instant yielding
@@ -78,12 +78,8 @@ for i in np.arange(STEPS):
     DStart = DYield[i]
     P = PArray[i]
     T = TArray[i]
-    # if material.G < 2 * x(DStart):
     sol = solve_ivp(d_total, [0, TIME * 60], [DStart],
                     args=[T, P], t_eval=t_eval, rtol=1e-6, atol=1e-6)
-    # else:
-    #     sol = solve_ivp(d_total_without_nhc, [0, TIME * 60], [DStart],
-    #                     args=[T, P], t_eval=t_eval, rtol=1e-6, atol=1e-6)
 
     DStep = sol.y[0][TIMES]
     DTotal[i] = DStep
@@ -92,9 +88,9 @@ for i in np.arange(STEPS):
 
 fig, ax = plt.subplots(figsize=(8, 8))
 ax.semilogx(PArray, DYield)
-# plt.plot(PArray, DYield)
+# # plt.plot(PArray, DYield)
 plt.plot(PArray, DTotal)
-# # # ax.semilogx([np.amin(PArray), np.amax(PArray)], [constants.D0, constants.D0])
+# ax.semilogx([np.amin(PArray), np.amax(PArray)], [constants.D0, constants.D0])
 plt.xlim(np.amin(PArray), np.amax(PArray))
 plt.ylim(0.6, 1)
 plt.xlabel('Pressure / Pa')
@@ -110,17 +106,17 @@ plt.show()
 
 # print(DTime[-1])
 
+# fig, ax = plt.subplots()
 # plt.plot(TArray, DYield)
 # plt.plot(TArray, DTotal)
-# fig, ax = plt.subplots()
 # ax.plot(DTime, label='D')
 # ax.plot(TArray/1000, label='T')
 # ax.plot(PArray/100000000, label='P')
 #
 # legend = ax.legend(loc='upper center', fontsize='x-large')
 
-# plt.xlim(0, 268)
-# plt.ylim(constants.D0, 1)
+# plt.xlim(TMIN, TMAX)
+# plt.ylim(0.6, 1)
 # plt.xlabel('Zeit / min')
 # plt.ylabel('relative Dichte / –')
 # plt.show()
