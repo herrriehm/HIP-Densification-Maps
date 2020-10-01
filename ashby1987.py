@@ -42,12 +42,12 @@ def pressure_i(d):
 
 def d_yield1(temperature, pressure):
     return np.power(
-        (1 - constants.D0) / (1.3 * material.SIGMAY0) * pressure + np.power(
+        (1 - constants.D0) / (1.3 * fun_aux.sigmay(temperature)) * pressure + np.power(
             constants.D0, 3), 1 / 3)
 
 
 def d_yield2(temperature, pressure):
-    result = 1 - np.exp(-3 / 2 * pressure / material.SIGMAY0)
+    result = 1 - np.exp(-3 / 2 * pressure / fun_aux.sigmay(temperature))
     if result < constants.D0:
         return constants.D0
     else:
@@ -57,12 +57,12 @@ def d_yield2(temperature, pressure):
 def d_dot_plc1(d, temperature, pressure):
     return 3.1 / np.power(c(d), 1 / 2) * d_crp(temperature) * d * np.power(
         c(d) * (pressure - constants.P0) / (
-                3 * material.SIGMAY0 * np.power(d, 2)), material.n)
+                3 * fun_aux.sigmay(temperature) * np.power(d, 2)), material.n)
 
 
 def d_dot_plc2(d, temperature, pressure):
     return 1.5 * d_crp(temperature) * d * (1 - d) * np.power(
-        1.5 / material.n * (pressure - pressure_i(d)) / material.SIGMAY0 / (
+        1.5 / material.n * (pressure - pressure_i(d)) / fun_aux.sigmay(temperature) / (
                 1 - np.power(1 - d, 1 / material.n)), material.n)
 
 
