@@ -24,9 +24,13 @@ import material
 
 
 def d_yield1(temperature, pressure):
-    return np.power(
+    result = np.power(
         (1 - constants.D0) * pressure / (1.3 * fun_aux.sigmay(temperature)) +
         np.power(constants.D0, 3), 1 / 3)
+    if result < constants.D0:
+        return constants.D0
+    else:
+        return result
 
 
 def d_yield2(temperature, pressure):
@@ -138,8 +142,10 @@ def d_dot_nhc2(d, temperature, pressure):
 def d_total_1(d, temperature, pressure):
     if d > 1.0:
         d = 1.0
-    elif d < constants.D0:
-        d = constants.D0 + 1E-9
+    elif np.isnan(d):
+        d = 1.0
+    elif d <= constants.D0:
+        d = constants.D0 + 1E-15
     # if d < constants.D0:
     #     d = constants.D0+1.0E-6
     return d_dot_plc1(d, temperature, pressure) + \
@@ -150,8 +156,10 @@ def d_total_1(d, temperature, pressure):
 def d_total_2(d, temperature, pressure):
     if d > 1.0:
         d = 1.0
-    elif d < constants.D0:
-        d = constants.D0 + 1E-9
+    elif np.isnan(d):
+        d = 1.0
+    elif d <= constants.D0:
+        d = constants.D0 + 1E-15
     # if d < constants.D0:
     #     d = constants.D0+1.0E-6
     return d_dot_plc2(d, temperature, pressure) + \
