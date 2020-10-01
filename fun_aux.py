@@ -22,14 +22,20 @@ import constants
 import material
 
 
+def A(temperature):
+    return material.A * material.B * dv(temperature) / (
+                constants.BOLTZMANN * temperature * np.power(mu(temperature),
+                                                             material.n - 1))
+
+
 def mu(temperature):
     return material.MU0 * (
-                1 + (temperature - 300) / material.TM * material.BETA)
+            1 + (temperature - 300) / material.TM * material.BETA)
 
 
 def sigmay(temperature):
     return material.SIGMAY0 * (
-                1 + (temperature - 300) / material.TM * material.ALPHA)
+            1 + (temperature - 300) / material.TM * material.ALPHA)
 
 
 def dv(temperature):
@@ -59,7 +65,7 @@ def x(d):
 
 def p_eff(d, pressure):
     result = pressure * (1 - constants.D0) / (
-                np.power(d, 2) * (d - constants.D0))
+            np.power(d, 2) * (d - constants.D0))
     return result
 
 

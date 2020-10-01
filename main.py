@@ -28,17 +28,18 @@ from fun_dens import *
 # import svoboda1996
 # import schnecke
 
+# from redouani2012 import *
 
 TMIN = 1200 + 273
 TMAX = 1200 + 273
-Pmin = 100E6
-Pmax = 100E6
+Pmin = 250E6
+Pmax = 250E6
 
 # times for contour lines
-TIMES = np.array([15, 30, 60, 120, 240])  # min
+TIMES = np.array([15,30,60,120,240])  # min
 
-# TArray = schnecke.TArray
-# PArray = schnecke.PArray
+# TArray = redouani2019.TArray
+# PArray = redouani2019.PArray
 
 # total minutes of HIP cycle to be simulated
 TIME = np.max(TIMES)
@@ -51,7 +52,7 @@ t_eval = np.arange(0, TIME * 60 + 1, 60)
 STEPS = np.size(t_eval)
 
 TArray = np.linspace(TMIN, TMAX, num=STEPS)
-PArray = np.logspace(-2, 1,
+PArray = np.logspace(-3, 1,
                      num=STEPS) * fun_aux.sigmay(TMAX)
 # PArray = np.linspace(Pmin, Pmax, num=STEPS)
 
@@ -88,9 +89,9 @@ for i in np.arange(STEPS):
 
 fig, ax = plt.subplots(figsize=(8, 8))
 ax.semilogx(PArray, DYield)
-# # plt.plot(PArray, DYield)
+# plt.plot(TArray, DYield)
 plt.plot(PArray, DTotal)
-# ax.semilogx([np.amin(PArray), np.amax(PArray)], [constants.D0, constants.D0])
+# # ax.semilogx([np.amin(PArray), np.amax(PArray)], [constants.D0, constants.D0])
 plt.xlim(np.amin(PArray), np.amax(PArray))
 plt.ylim(0.6, 1)
 plt.xlabel('Pressure / Pa')
@@ -109,7 +110,7 @@ plt.show()
 # fig, ax = plt.subplots()
 # plt.plot(TArray, DYield)
 # plt.plot(TArray, DTotal)
-# ax.plot(DTime, label='D')
+# plt.plot(DTime, label='D')
 # ax.plot(TArray/1000, label='T')
 # ax.plot(PArray/100000000, label='P')
 #
@@ -125,6 +126,8 @@ plt.show()
 # csvArray = np.concatenate(
 #     (np.transpose([PArray]), np.transpose([DYield]), DTotal), axis=1)
 #
-# np.savetxt(material.exportfilename, csvArray,
-#            # header='T, Yield, 15 min, 30 min, 60 min, 120 min, 240 min',
+# exportfilename = "Arzt1983Fig1mitRedouani.csv"
+#
+# np.savetxt(exportfilename, csvArray,
+#            header='P, Yield, 15 min, 30 min, 60 min, 120 min, 240 min',
 #            delimiter=',')
