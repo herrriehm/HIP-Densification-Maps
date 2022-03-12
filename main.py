@@ -19,7 +19,6 @@
 import matplotlib.pyplot as plt
 from scipy.integrate import solve_ivp
 
-from fun_aux import *
 from fun_dens import *
 
 # from ashby1987 import *
@@ -28,18 +27,20 @@ from fun_dens import *
 # import svoboda1996
 # import schnecke
 
+import cvntable58
+
 # from redouani2012 import *
 
-TMIN = 1200 + 273
-TMAX = 1200 + 273
-Pmin = 250E6
-Pmax = 250E6
+# TMIN = 25 + 273
+# TMAX = 25 + 273
+# Pmin = 250E6
+# Pmax = 250E6
+
+TArray = cvntable58.TArray
+PArray = cvntable58.PArray
 
 # times for contour lines
-TIMES = np.array([15,30,60,120,240])  # min
-
-# TArray = redouani2019.TArray
-# PArray = redouani2019.PArray
+TIMES = TArray.size-1 #np.array([60])  # min
 
 # total minutes of HIP cycle to be simulated
 TIME = np.max(TIMES)
@@ -51,9 +52,9 @@ t_eval = np.arange(0, TIME * 60 + 1, 60)
 # number of steps 'on the x axis' to calculate the densification
 STEPS = np.size(t_eval)
 
-TArray = np.linspace(TMIN, TMAX, num=STEPS)
-PArray = np.logspace(-3, 1,
-                     num=STEPS) * fun_aux.sigmay(TMAX)
+# TArray = np.linspace(TMIN, TMAX, num=STEPS)
+# PArray = np.logspace(-2, 1,
+#                      num=STEPS) * fun_aux.sigmay(TMAX)
 # PArray = np.linspace(Pmin, Pmax, num=STEPS)
 
 # calculate initial density Dy from instant yielding
@@ -87,17 +88,22 @@ for i in np.arange(STEPS):
     DTime[i] = sol.y[0][i]
     # print(DTime[i])
 
-fig, ax = plt.subplots(figsize=(8, 8))
-ax.semilogx(PArray, DYield)
-# plt.plot(TArray, DYield)
-plt.plot(PArray, DTotal)
-# # ax.semilogx([np.amin(PArray), np.amax(PArray)], [constants.D0, constants.D0])
-plt.xlim(np.amin(PArray), np.amax(PArray))
-plt.ylim(0.6, 1)
-plt.xlabel('Pressure / Pa')
-plt.ylabel('Relative Density / –')
-plt.show()
+DTotal = np.where(DTotal <= 1, DTotal, 1)
+DTime = np.where(DTime <= 1, DTime, 1)
 
+
+# fig, ax = plt.subplots(figsize=(8, 8))
+# ax.semilogx(PArray, DYield)
+# # # # plt.plot(TArray, DYield)
+# plt.plot(PArray, DTotal)
+# # # # # ax.semilogx([np.amin(PArray), np.amax(PArray)], [constants.D0, constants.D0])
+# plt.xlim(np.amin(PArray), np.amax(PArray))
+# plt.ylim(0.6, 1)
+# plt.xlabel('Pressure / Pa')
+# plt.ylabel('Relative Density / –')
+# plt.show()
+
+# print(material.R)
 # def fitjasper(temperature):
 #     return 0.9973 * np.exp(-5.552e-08 * temperature) - 2.106e+04 * np.exp(
 #         -0.008148 * temperature)
@@ -105,29 +111,29 @@ plt.show()
 #
 # DJasper = fitjasper(TArray)
 
-# print(DTime[-1])
+print(DTime[-1])
 
 # fig, ax = plt.subplots()
-# plt.plot(TArray, DYield)
-# plt.plot(TArray, DTotal)
+# # plt.plot(TArray, DYield)
+# # plt.plot(TArray, DTotal)
 # plt.plot(DTime, label='D')
-# ax.plot(TArray/1000, label='T')
-# ax.plot(PArray/100000000, label='P')
+# # ax.plot(TArray/1000, label='T')
+# # ax.plot(PArray/100000000, label='P')
+# #
+# # legend = ax.legend(loc='upper center', fontsize='x-large')
 #
-# legend = ax.legend(loc='upper center', fontsize='x-large')
-
-# plt.xlim(TMIN, TMAX)
-# plt.ylim(0.6, 1)
+# # plt.xlim(TMIN, TMAX)
+# plt.ylim(0.64, 1)
 # plt.xlabel('Zeit / min')
 # plt.ylabel('relative Dichte / –')
 # plt.show()
 # print(f'T: {TArray[-1]-273}, P: {PArray[-1]/1000000}, D: {DTime[-1]}')
-
+#
 # csvArray = np.concatenate(
 #     (np.transpose([PArray]), np.transpose([DYield]), DTotal), axis=1)
+
+# exportfilename = "100.csv"
 #
-# exportfilename = "Arzt1983Fig1mitRedouani.csv"
-#
-# np.savetxt(exportfilename, csvArray,
-#            header='P, Yield, 15 min, 30 min, 60 min, 120 min, 240 min',
+# np.savetxt(material.exportfilename, DTotal*100,
+# #            # header='P, Yield, 15 min, 30 min, 60 min, 120 min, 240 min',
 #            delimiter=',')

@@ -16,29 +16,29 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-# Tool steel
-OMEGA = 1.21E-29  # m^3
-B = 2.58E-10  # m
-TM = 1680  # K
-# SIGMAY = 200.0E6  # Pa; from Helle 1985
-SIGMAY0 = 791.375E6  # Pa; from Arzt 1983 with WPD
-# SIGMAY0 = 200.0E6  # Pa; from Redouani 2015
-ALPHA = -0.73  # from Arzt 1983 with WPD
-# ALPHA = -0.85  # from Redouani 2015
-# SIGMAY0 = 9.1E8  # Pa; from Arzt 1983
-# ALPHA = -4.5  # from Arzt 1983
-MU0 = 8.1E10  # Pa
-BETA = -0.85
-D0V = 3.7E-5  # m^2 s^-1
-QV = 280.0E3  # J mol^-1
-QCRP = 280.0E3  # J mol^-1
-DD0B = 2.0E-13  # m^3 s^-1
-QB = 167.0E3  # J mol^-1
-n = 7.5
-A = 1.5E12
-
-R = 25.0E-6  # m
-G = 25.0E-6  # m
+# # Tool steel
+# OMEGA = 1.21E-29  # m^3
+# B = 2.58E-10  # m
+# TM = 1680  # K
+# # SIGMAY = 200.0E6  # Pa; from Helle 1985
+# SIGMAY0 = 791.375E6  # Pa; from Arzt 1983 with WPD
+# # SIGMAY0 = 200.0E6  # Pa; from Redouani 2015
+# ALPHA = -0.73  # from Arzt 1983 with WPD
+# # ALPHA = -0.85  # from Redouani 2015
+# # SIGMAY0 = 9.1E8  # Pa; from Arzt 1983
+# # ALPHA = -4.5  # from Arzt 1983
+# MU0 = 8.1E10  # Pa
+# BETA = -0.85
+# D0V = 3.7E-5  # m^2 s^-1
+# QV = 280.0E3  # J mol^-1
+# QCRP = 280.0E3  # J mol^-1
+# DD0B = 2.0E-13  # m^3 s^-1
+# QB = 167.0E3  # J mol^-1
+# n = 7.5
+# A = 1.5E12
+#
+# R = 25.0E-6  # m
+# G = 25.0E-6  # m
 
 
 # # Copper
@@ -100,26 +100,26 @@ G = 25.0E-6  # m
 # G = 1.0484E-05
 
 # 316L
-# OMEGA = 1.0 * 1.21E-29
-# B = 1.0 * 2.58E-10
-# TM = 1.0 * 1680
-# SIGMAY0 = 1.0 * 550.0E6  # 363.6E6  # fitted with Matlab for CvN Figure 5-5
+OMEGA = 1. * 1.21E-29
+B = 1. * 2.58E-10
+TM = 1. * 1680
+SIGMAY0 = 1. * 550.0E6  # 363.6E6  # fitted with Matlab for CvN Figure 5-5
 # SIGMAY = 1.0 * 550.0E6  # 363.6E6  # fitted with Matlab for CvN Figure 5-5
-# ALPHA = 1.0 * -0.85  # taken from Tool Steel data
-# MU0 = 1.0 * 8.1E10
-# BETA = 1.0 * -0.85
-# D0V = 1.0 * 3.7E-5
-# QV = 1.0 * 280.0E3
+ALPHA = 1. * -0.85  # taken from Tool Steel data
+MU0 = 1. * 8.1E10
+BETA = 1. * -0.85
+D0V = 1. * 3.7E-5
+QV = 1. * 280.0E3
 # QCRP = 1.0 * 280.0E3
-# DD0B = 1.0 * 2.0E-13
-# QB = 1.0 * 167.0E3
-# n = 1.0 * 7.9
-# A = 1.0 * 1.0E10
+DD0B = 1. * 2.0E-13
+QB = 1. * 167.0E3
+n = 1. * 7.9
+A = 1. * 1.0E10
+
+R = 1. * 143.0E-6/2  # m # taken with WPD from CvN Figure 6-1
+G = 1. * 17.4E-6  # m; value fitted for best agreement with CvN Table 5-8
 #
-# R = 1.0 * 143.0E6  # m # taken with WPD from CvN Figure 6-1
-# G = 1.0 * 17.4E-6  # m; value fitted for best agreement with CvN Table 5-8
-#
-# exportfilename = 'g120.csv'
+exportfilename = 'dens_125.csv'
 
 # # Lead
 # OMEGA = 3.03E-29  # m^3

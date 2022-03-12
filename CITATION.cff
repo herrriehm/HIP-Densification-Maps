@@ -1,0 +1,20 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: HIP-Densification-Maps
+message: 'If you use this software, please cite it as below.'
+type: software
+authors:
+  - given-names: Sebastian
+    family-names: Riehm
+    email: hallo@herrriehm.de
+    orcid: 'https://orcid.org/0000-0002-0209-2629'
+repository-code: 'https://github.com/herrriehm/HIP-Densification-Maps'
+abstract: >-
+  a modern approach to build densification maps for
+  hot isostatic pressing after the works of Ashby et
+  al.
+license: GPL-3.0
+version: 0.0.1
+date-released: '2022-03-12'
